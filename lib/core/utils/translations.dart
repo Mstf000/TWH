@@ -1,0 +1,25 @@
+final Map<String, Map<String, String>> translations = {
+  'start_deal': {'en': 'Start Deal', 'ar': 'ابدأ الاستشارة'},
+  'welcome': {
+    'en': 'Welcome to The Wellness Hub',
+    'ar': 'مرحبًا بك في The Wellness Hub'
+  },
+  'name': {'en': 'Name', 'ar': 'الاسم'},
+  'phone': {'en': 'Phone Number', 'ar': 'رقم التليفون'},
+  'email': {'en': 'Email', 'ar': 'البريد الإلكتروني'},
+  'dob': {'en': 'Date of Birth', 'ar': 'تاريخ الميلاد'},
+  'height': {'en': 'Height (cm)', 'ar': 'الطول (سم)'},
+  'weight': {'en': 'Weight (kg)', 'ar': 'الوزن (كجم)'},
+  'gender': {'en': 'Gender', 'ar': 'النوع'},
+  'male': {'en': 'Male', 'ar': 'ذكر'},
+  'female': {'en': 'Female', 'ar': 'أنثى'},
+  'region': {'en': 'Region', 'ar': 'منطقة السكن'},
+  'residence': {'en': 'Residence Type', 'ar': 'نوع السكن'},
+  'branch': {'en': 'Branch', 'ar': 'الفرع'},
+  'sales': {'en': 'Sales Representative', 'ar': 'مسؤول المبيعات'},
+  'next': {'en': 'Next', 'ar': 'التالي'},
+  'back': {'en': 'Back', 'ar': 'رجوع'},
+  'submit': {'en': 'Submit', 'ar': 'إرسال'},
+  'personalInfo': {'en': 'Personal Info', 'ar': 'معلومات شخصية'},
+  'lifeStyle': {'en': 'Life Style', 'ar': 'نمط الحياة'},
+};

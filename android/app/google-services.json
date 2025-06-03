@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "476511145339",
+    "project_id": "ttwwhh-45a0f",
+    "storage_bucket": "ttwwhh-45a0f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:476511145339:android:9ef927c2d41d5ec82101de",
+        "android_client_info": {
+          "package_name": "com.example.twh"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9d5CHBAocwQzd5qh8zOIpaLYYvsKNX30"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

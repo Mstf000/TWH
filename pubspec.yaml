@@ -1,0 +1,46 @@
+name: twh
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  provider: ^6.1.1
+  flutter_localizations:
+    sdk: flutter 
+
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.15.3
+  cloud_firestore: ^4.13.1
+  http: ^0.13.5
+  lottie: ^2.6.0
+  excel: ^2.0.6
+  path_provider: ^2.1.1
+  permission_handler: ^11.0.1
+  open_file: ^3.3.2
+  csv: ^5.0.2
+  connectivity_plus: ^5.0.2
+
+
+
+  cupertino_icons: ^1.0.6
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/logo.png
+    - assets/massage-chair.png
+    - assets/assets/loading.json
