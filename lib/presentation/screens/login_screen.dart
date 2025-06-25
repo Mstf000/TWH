@@ -151,12 +151,12 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          const Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: ConnectivityBanner(),
-          ),
+          // const Positioned(
+          //   top: 0,
+          //   left: 0,
+          //   right: 0,
+          //   child: ConnectivityBanner(),
+          // ),
         ],
       ),
     );

@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
+import 'package:twh/core/utils/permission_handler.dart';
 import 'package:twh/presentation/screens/home_screen.dart';
 import 'package:twh/presentation/screens/summary_screen.dart';
 
@@ -7,6 +10,10 @@ import '../../core/utils/translations.dart';
 import '../providers/locale_provider.dart';
 import '../providers/form_data_provider.dart';
 import '../../data/services/firestore_service.dart';
+
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 class LifestyleInfoScreen extends StatefulWidget {
   const LifestyleInfoScreen({super.key});
@@ -18,6 +25,7 @@ class LifestyleInfoScreen extends StatefulWidget {
 class _LifestyleInfoScreenState extends State<LifestyleInfoScreen> {
   late TextEditingController notesController;
   final Map<String, TextEditingController> _textControllers = {};
+  TimeOfDay? selectedTime;
 
   @override
   void initState() {
@@ -294,6 +302,44 @@ class _LifestyleInfoScreenState extends State<LifestyleInfoScreen> {
                               formData.update('deal_product', product);
                             },
                           ),
+                        if (formData.getValue('deal_status') == 'pending') ...[
+                          const SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed:
+                                _showTimePicker, // Show the time picker when "Pending" is selected
+                            child: Text(selectedTime == null
+                                ? 'Select Time'
+                                : 'Selected Time: ${selectedTime!.format(context)}'),
+                          ),
+                          const SizedBox(height: 16),
+                          TextField(
+                            controller: notesController,
+                            decoration:
+                                const InputDecoration(hintText: 'Enter Notes'),
+                          ),
+                          const SizedBox(height: 16),
+                          ElevatedButton(
+                            onPressed: () {
+                              _savePendingDeal(); // Save deal
+                              // _scheduleNotification(); // Schedule the notification
+                            },
+                            child: const Text('Save Pending Deal'),
+                          ),
+                        ],
+                        const SizedBox(height: 24),
+                        _buildRadioQuestion(
+                          context,
+                          label: isArabic
+                              ? 'ما هي فئة العميل؟'
+                              : 'What is the Customer Tier?',
+                          options: [
+                            {'en': 'High', 'ar': 'اولي', 'value': 'high'},
+                            {'en': 'Med', 'ar': 'تانية', 'value': 'med'},
+                            {'en': 'Low', 'ar': 'تالتة', 'value': 'low'},
+                          ],
+                          keyName: 'customer_tier',
+                          customValueKey: 'value',
+                        ),
                         const SizedBox(height: 24),
                         Text(
                           isArabic
@@ -395,6 +441,76 @@ class _LifestyleInfoScreenState extends State<LifestyleInfoScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _showTimePicker() async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (pickedTime != null) {
+      setState(() {
+        selectedTime = pickedTime;
+      });
+    }
+  }
+
+  Future<void> _scheduleNotification(DateTime selectedDateTime) async {
+    // Request permission before scheduling notification
+    await requestPermission(); // Request the permission
+
+    final now = DateTime.now();
+
+    // Check if the selected time is in the future
+    if (selectedDateTime.isAfter(now)) {
+      const AndroidNotificationDetails androidDetails =
+          AndroidNotificationDetails(
+        'your_channel_id',
+        'your_channel_name',
+        channelDescription: 'Your channel description',
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'ticker',
+      );
+
+      const NotificationDetails platformDetails =
+          NotificationDetails(android: androidDetails);
+
+      // Schedule the notification at the selected time
+      await flutterLocalNotificationsPlugin.schedule(
+        0,
+        'Scheduled Notification Title',
+        'Scheduled Notification Body',
+        selectedDateTime, // Use the selected time
+        platformDetails,
+      );
+
+      print('Notification scheduled at $selectedDateTime');
+    } else {
+      print('Selected time is in the past');
+    }
+  }
+
+  void _savePendingDeal() {
+    if (selectedTime != null && notesController.text.isNotEmpty) {
+      final now = DateTime.now();
+      final selectedDateTime = DateTime(now.year, now.month, now.day,
+          selectedTime!.hour, selectedTime!.minute);
+
+      // Save to Firestore
+      FirebaseFirestore.instance.collection('deals').add({
+        'dealStatus': 'pending',
+        'scheduledTime': selectedDateTime,
+        'notes': notesController.text,
+        'createdAt': now,
+      });
+
+      // Log the saved deal
+      print('Deal saved: $selectedDateTime, Notes: ${notesController.text}');
+
+      // Schedule the notification with the selected time
+      _scheduleNotification(selectedDateTime); // Pass selected time here
+    }
   }
 
   Widget _buildRadioQuestion(BuildContext context,

@@ -11,7 +11,11 @@ import 'presentation/providers/form_data_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); // ✅ Initializes Firebase
+  try {
+    await Firebase.initializeApp(); // ✅ Initializes Firebase
+  } catch (e) {
+    print("Firebase initialization error: $e");
+  }
   runApp(const TWHApp());
 }
 

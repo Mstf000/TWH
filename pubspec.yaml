@@ -16,6 +16,7 @@ dependencies:
     sdk: flutter 
 
   firebase_core: ^2.24.2
+  firebase_storage: ^11.0.4
   firebase_auth: ^4.15.3
   cloud_firestore: ^4.13.1
   http: ^0.13.5
@@ -26,6 +27,15 @@ dependencies:
   open_file: ^3.3.2
   csv: ^5.0.2
   connectivity_plus: ^5.0.2
+  pdf: ^3.11.3
+  printing: ^5.11.0
+  mime: ^1.0.4
+  http_parser: ^4.0.2
+  # path_provider: ^2.0.15
+  share_plus: ^7.2.1
+  flutter_local_notifications: ^9.0.0
+  intl: ^0.18.1
+  # permission_handler: ^10.2.0
 
 
 
@@ -44,3 +54,5 @@ flutter:
     - assets/logo.png
     - assets/massage-chair.png
     - assets/assets/loading.json
+    - assets/fonts/Cairo-Regular.ttf
+    - assets/fonts/Cairo-Bold.ttf

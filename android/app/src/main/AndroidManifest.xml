@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" /> <!-- Add permission for exact alarms -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- Required for notifications on Android 13+ -->
 
     <application
         android:name="androidx.multidex.MultiDexApplication"
@@ -21,7 +23,6 @@
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
 
-            <!-- Specifies an Android theme to apply while Flutter UI initializes -->
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
@@ -32,13 +33,11 @@
             </intent-filter>
         </activity>
 
-        <!-- Required by Flutter tooling -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
 
-    <!-- Allow text sharing to other apps -->
     <queries>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
